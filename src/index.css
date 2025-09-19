@@ -165,4 +165,14 @@
   .dashboard-card {
     @apply bg-gradient-to-br from-white to-muted/30 border-border/50 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)];
   }
+
+  /* Responsive utilities */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

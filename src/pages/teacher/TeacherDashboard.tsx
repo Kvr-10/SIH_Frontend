@@ -171,62 +171,62 @@ const TeacherDashboard = () => {
       <header className="bg-white/80 backdrop-blur-sm border-b border-border/50 shadow-[var(--shadow-soft)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
                 <UserCheck className="w-5 h-5 text-white" />
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-card-foreground">Teacher Dashboard</h1>
-                <p className="text-sm text-muted-foreground">Welcome back, {user?.name}</p>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-lg sm:text-xl font-bold text-card-foreground truncate">Teacher Dashboard</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground truncate">Welcome back, {user?.name}</p>
               </div>
             </div>
             <Button 
               onClick={logout}
-              className="flex items-center space-x-2 bg-red-500 text-black hover:bg-red-600"
+              className="flex items-center space-x-1 sm:space-x-2 bg-red-500 text-black hover:bg-red-600"
               size="sm"
             >
               <LogOut className="w-4 h-4" />
-              <span>Logout</span>
+              <span className="hidden sm:inline">Logout</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <Card className="dashboard-card cursor-pointer hover:scale-105 transition-transform" onClick={handleTakeAttendance}>
-            <CardContent className="flex items-center justify-center p-6">
+            <CardContent className="flex items-center justify-center p-4 sm:p-6">
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <QrCode className="w-6 h-6 text-primary" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                  <QrCode className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 </div>
-                <h3 className="font-semibold">Take Attendance</h3>
-                <p className="text-sm text-muted-foreground">Scan QR codes</p>
+                <h3 className="font-semibold text-sm sm:text-base">Take Attendance</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">Scan QR codes</p>
               </div>
             </CardContent>
           </Card>
 
           <Card className="dashboard-card">
-            <CardContent className="flex items-center justify-center p-6">
+            <CardContent className="flex items-center justify-center p-4 sm:p-6">
               <div className="text-center">
-                <div className="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-6 h-6 text-success" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                  <Users className="w-5 h-5 sm:w-6 sm:h-6 text-success" />
                 </div>
-                <h3 className="font-semibold">Total Students</h3>
-                <p className="text-2xl font-bold text-success">{students.length}</p>
+                <h3 className="font-semibold text-sm sm:text-base">Total Students</h3>
+                <p className="text-xl sm:text-2xl font-bold text-success">{students.length}</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="dashboard-card">
-            <CardContent className="flex items-center justify-center p-6">
+          <Card className="dashboard-card sm:col-span-2 lg:col-span-1">
+            <CardContent className="flex items-center justify-center p-4 sm:p-6">
               <div className="text-center">
-                <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <CheckCircle className="w-6 h-6 text-accent" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                  <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                 </div>
-                <h3 className="font-semibold">Today's Attendance</h3>
-                <p className="text-2xl font-bold text-accent">
+                <h3 className="font-semibold text-sm sm:text-base">Today's Attendance</h3>
+                <p className="text-xl sm:text-2xl font-bold text-accent">
                   {attendanceRecords.filter(record => record.date === new Date().toLocaleDateString()).length}
                 </p>
               </div>
@@ -235,60 +235,66 @@ const TeacherDashboard = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex space-x-1 mb-8 bg-white/50 p-1 rounded-lg w-fit">
-          <Button
-            variant={activeTab === 'attendance' ? 'default' : 'ghost'}
-            onClick={() => setActiveTab('attendance')}
-            className="flex items-center space-x-2"
-          >
-            <Camera className="w-4 h-4" />
-            <span>Take Attendance</span>
-          </Button>
-          <Button
-            variant={activeTab === 'students' ? 'default' : 'ghost'}
-            onClick={() => setActiveTab('students')}
-            className="flex items-center space-x-2"
-          >
-            <UserPlus className="w-4 h-4" />
-            <span>Add Student</span>
-          </Button>
-          <Button
-            variant={activeTab === 'records' ? 'default' : 'ghost'}
-            onClick={() => setActiveTab('records')}
-            className="flex items-center space-x-2"
-          >
-            <ClipboardList className="w-4 h-4" />
-            <span>View Records</span>
-          </Button>
-          <Button
-            variant={activeTab === 'reportcard' ? 'default' : 'ghost'}
-            onClick={() => setActiveTab('reportcard')}
-            className="flex items-center space-x-2"
-          >
-            <GraduationCap className="w-4 h-4" />
-            <span>Report Card</span>
-          </Button>
+        <div className="mb-6 sm:mb-8">
+          <div className="flex overflow-x-auto space-x-1 bg-white/50 p-1 rounded-lg scrollbar-hide">
+            <Button
+              variant={activeTab === 'attendance' ? 'default' : 'ghost'}
+              onClick={() => setActiveTab('attendance')}
+              className="flex items-center space-x-1 sm:space-x-2 whitespace-nowrap flex-shrink-0 text-xs sm:text-sm"
+              size="sm"
+            >
+              <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>Take Attendance</span>
+            </Button>
+            <Button
+              variant={activeTab === 'students' ? 'default' : 'ghost'}
+              onClick={() => setActiveTab('students')}
+              className="flex items-center space-x-1 sm:space-x-2 whitespace-nowrap flex-shrink-0 text-xs sm:text-sm"
+              size="sm"
+            >
+              <UserPlus className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>Add Student</span>
+            </Button>
+            <Button
+              variant={activeTab === 'records' ? 'default' : 'ghost'}
+              onClick={() => setActiveTab('records')}
+              className="flex items-center space-x-1 sm:space-x-2 whitespace-nowrap flex-shrink-0 text-xs sm:text-sm"
+              size="sm"
+            >
+              <ClipboardList className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>View Records</span>
+            </Button>
+            <Button
+              variant={activeTab === 'reportcard' ? 'default' : 'ghost'}
+              onClick={() => setActiveTab('reportcard')}
+              className="flex items-center space-x-1 sm:space-x-2 whitespace-nowrap flex-shrink-0 text-xs sm:text-sm"
+              size="sm"
+            >
+              <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>Report Card</span>
+            </Button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {activeTab === 'attendance' && (
             <>
               <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center space-x-2 text-lg">
                     <QrCode className="w-5 h-5" />
                     <span>QR Code Attendance</span>
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm">
                     Click the button below to open camera and scan student QR codes
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <div className="py-8">
-                    <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Camera className="w-12 h-12 text-primary" />
+                  <div className="py-6 sm:py-8">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Camera className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
                     </div>
-                    <Button onClick={handleTakeAttendance} className="btn-primary">
+                    <Button onClick={handleTakeAttendance} className="btn-primary w-full sm:w-auto">
                       <QrCode className="w-4 h-4 mr-2" />
                       Start QR Scanner
                     </Button>
@@ -297,15 +303,15 @@ const TeacherDashboard = () => {
               </Card>
 
               <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle>Recent Attendance</CardTitle>
-                  <CardDescription>
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg">Recent Attendance</CardTitle>
+                  <CardDescription className="text-sm">
                     Latest attendance records from today
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {attendanceRecords.length === 0 ? (
-                    <p className="text-muted-foreground text-center py-8">
+                    <p className="text-muted-foreground text-center py-6 sm:py-8 text-sm">
                       No attendance records yet
                     </p>
                   ) : (
@@ -318,11 +324,11 @@ const TeacherDashboard = () => {
                           key={record.id} 
                           className="flex items-center justify-between p-3 bg-muted/30 rounded-lg"
                         >
-                          <div>
-                            <h4 className="font-medium">{record.studentName}</h4>
-                            <p className="text-sm text-muted-foreground">{record.time}</p>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-sm sm:text-base truncate">{record.studentName}</h4>
+                            <p className="text-xs sm:text-sm text-muted-foreground">{record.time}</p>
                           </div>
-                          <Badge variant="outline" className="bg-success/10 text-success border-success/20">
+                          <Badge variant="outline" className="bg-success/10 text-success border-success/20 text-xs ml-2 flex-shrink-0">
                             {record.status}
                           </Badge>
                         </div>
@@ -337,41 +343,43 @@ const TeacherDashboard = () => {
           {activeTab === 'students' && (
             <>
               <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center space-x-2 text-lg">
                     <UserPlus className="w-5 h-5" />
                     <span>Add New Student</span>
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm">
                     Register a new student in your class
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleAddStudent} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="studentId">Student ID *</Label>
-                      <Input
-                        id="studentId"
-                        value={studentForm.studentId}
-                        onChange={(e) => setStudentForm(prev => ({ ...prev, studentId: e.target.value }))}
-                        placeholder="e.g., S001"
-                        className="input-field"
-                        required
-                      />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="studentId" className="text-sm font-medium">Student ID *</Label>
+                        <Input
+                          id="studentId"
+                          value={studentForm.studentId}
+                          onChange={(e) => setStudentForm(prev => ({ ...prev, studentId: e.target.value }))}
+                          placeholder="e.g., S001"
+                          className="input-field text-sm"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="studentName" className="text-sm font-medium">Full Name *</Label>
+                        <Input
+                          id="studentName"
+                          value={studentForm.name}
+                          onChange={(e) => setStudentForm(prev => ({ ...prev, name: e.target.value }))}
+                          placeholder="Enter student's full name"
+                          className="input-field text-sm"
+                          required
+                        />
+                      </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="studentName">Full Name *</Label>
-                      <Input
-                        id="studentName"
-                        value={studentForm.name}
-                        onChange={(e) => setStudentForm(prev => ({ ...prev, name: e.target.value }))}
-                        placeholder="Enter student's full name"
-                        className="input-field"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="class">Class *</Label>
+                      <Label htmlFor="class" className="text-sm font-medium">Class *</Label>
                       <Select value={studentForm.class} onValueChange={(value) => setStudentForm(prev => ({ ...prev, class: value }))}>
                         <SelectTrigger className="input-field">
                           <SelectValue placeholder="Select class" />
@@ -385,40 +393,42 @@ const TeacherDashboard = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="parentName">Parent's Name *</Label>
-                      <Input
-                        id="parentName"
-                        value={studentForm.parentName}
-                        onChange={(e) => setStudentForm(prev => ({ ...prev, parentName: e.target.value }))}
-                        placeholder="Enter parent's full name"
-                        className="input-field"
-                        required
-                      />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="parentName" className="text-sm font-medium">Parent's Name *</Label>
+                        <Input
+                          id="parentName"
+                          value={studentForm.parentName}
+                          onChange={(e) => setStudentForm(prev => ({ ...prev, parentName: e.target.value }))}
+                          placeholder="Enter parent's full name"
+                          className="input-field text-sm"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="parentPhone" className="text-sm font-medium">Parent's Phone</Label>
+                        <Input
+                          id="parentPhone"
+                          value={studentForm.parentPhone}
+                          onChange={(e) => setStudentForm(prev => ({ ...prev, parentPhone: e.target.value }))}
+                          placeholder="Enter phone number"
+                          className="input-field text-sm"
+                        />
+                      </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="parentEmail">Parent's Email *</Label>
+                      <Label htmlFor="parentEmail" className="text-sm font-medium">Parent's Email *</Label>
                       <Input
                         id="parentEmail"
                         type="email"
                         value={studentForm.parentEmail}
                         onChange={(e) => setStudentForm(prev => ({ ...prev, parentEmail: e.target.value }))}
                         placeholder="parent@email.com"
-                        className="input-field"
+                        className="input-field text-sm"
                         required
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="parentPhone">Parent's Phone</Label>
-                      <Input
-                        id="parentPhone"
-                        value={studentForm.parentPhone}
-                        onChange={(e) => setStudentForm(prev => ({ ...prev, parentPhone: e.target.value }))}
-                        placeholder="Enter phone number"
-                        className="input-field"
-                      />
-                    </div>
-                    <Button type="submit" className="w-full btn-primary">
+                    <Button type="submit" className="w-full btn-primary mt-6">
                       Add Student
                     </Button>
                   </form>
@@ -426,15 +436,15 @@ const TeacherDashboard = () => {
               </Card>
 
               <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle>Current Students ({students.length})</CardTitle>
-                  <CardDescription>
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg">Current Students ({students.length})</CardTitle>
+                  <CardDescription className="text-sm">
                     All students in your classes
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {students.length === 0 ? (
-                    <p className="text-muted-foreground text-center py-8">
+                    <p className="text-muted-foreground text-center py-6 sm:py-8 text-sm">
                       No students added yet
                     </p>
                   ) : (
@@ -442,11 +452,11 @@ const TeacherDashboard = () => {
                       {students.map((student) => (
                         <div 
                           key={student.id} 
-                          className="flex items-center justify-between p-3 bg-muted/30 rounded-lg"
+                          className="flex items-start justify-between p-3 bg-muted/30 rounded-lg"
                         >
-                          <div>
-                            <h4 className="font-medium">{student.name}</h4>
-                            <p className="text-sm text-muted-foreground">{student.class}</p>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-sm sm:text-base truncate">{student.name}</h4>
+                            <p className="text-xs sm:text-sm text-muted-foreground">{student.class}</p>
                             <Badge variant="outline" className="mt-1 text-xs">
                               ID: {student.id}
                             </Badge>
@@ -461,37 +471,37 @@ const TeacherDashboard = () => {
           )}
 
           {activeTab === 'records' && (
-            <Card className="dashboard-card lg:col-span-2">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+            <Card className="dashboard-card xl:col-span-2">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center space-x-2 text-lg">
                   <ClipboardList className="w-5 h-5" />
                   <span>Attendance Records</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm">
                   View and manage all attendance records
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 {attendanceRecords.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-8">
+                  <p className="text-muted-foreground text-center py-6 sm:py-8 text-sm">
                     No attendance records yet
                   </p>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {attendanceRecords.map((record) => {
                       const student = students.find(s => s.id === record.studentId);
                       return (
                         <div 
                           key={record.id} 
-                          className="flex items-center justify-between p-4 bg-muted/30 rounded-lg"
+                          className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 bg-muted/30 rounded-lg space-y-3 sm:space-y-0"
                         >
-                          <div className="flex-1">
-                            <h4 className="font-medium">{record.studentName}</h4>
-                            <p className="text-sm text-muted-foreground">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-sm sm:text-base truncate">{record.studentName}</h4>
+                            <p className="text-xs sm:text-sm text-muted-foreground">
                               {record.date} at {record.time}
                             </p>
                           </div>
-                          <div className="flex items-center space-x-3">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                             <Badge 
                               variant="outline" 
                               className={
@@ -503,24 +513,24 @@ const TeacherDashboard = () => {
                               {record.status}
                             </Badge>
                             {student && (
-                              <div className="flex space-x-2">
+                              <div className="flex flex-wrap gap-2">
                                 <Button
                                   size="sm"
                                   variant="outline"
                                   onClick={() => handleSendEmail(student.parentEmail, student.name)}
-                                  className="flex items-center space-x-1"
+                                  className="flex items-center space-x-1 text-xs"
                                 >
                                   <Mail className="w-3 h-3" />
-                                  <span>Email</span>
+                                  <span className="hidden sm:inline">Email</span>
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="outline"
                                   onClick={() => handleSendSMS(student.parentPhone, student.name)}
-                                  className="flex items-center space-x-1"
+                                  className="flex items-center space-x-1 text-xs"
                                 >
                                   <MessageCircle className="w-3 h-3" />
-                                  <span>SMS</span>
+                                  <span className="hidden sm:inline">SMS</span>
                                 </Button>
                               </div>
                             )}
@@ -537,19 +547,19 @@ const TeacherDashboard = () => {
           {activeTab === 'reportcard' && (
             <>
               <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center space-x-2 text-lg">
                     <GraduationCap className="w-5 h-5" />
                     <span>Create Report Card</span>
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm">
                     Select a student and input marks for each subject
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmitGrades} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="student">Select Student *</Label>
+                      <Label htmlFor="student" className="text-sm font-medium">Select Student *</Label>
                       <Select value={selectedStudent} onValueChange={setSelectedStudent}>
                         <SelectTrigger className="input-field">
                           <SelectValue placeholder="Choose a student" />
@@ -569,30 +579,32 @@ const TeacherDashboard = () => {
                       const studentClass = classes.find(c => c.name === student?.class);
                       return studentClass ? (
                         <div className="space-y-3">
-                          <h4 className="font-medium">Enter Marks (Out of 100)</h4>
-                          {studentClass.subjects.map((subject) => (
-                            <div key={subject} className="flex items-center space-x-3">
-                              <Label className="min-w-[120px]">{subject}</Label>
-                              <Input
-                                type="number"
-                                min="0"
-                                max="100"
-                                value={gradeForm[subject] || ''}
-                                onChange={(e) => setGradeForm(prev => ({
-                                  ...prev,
-                                  [subject]: parseInt(e.target.value) || 0
-                                }))}
-                                placeholder="0-100"
-                                className="input-field flex-1"
-                              />
-                            </div>
-                          ))}
+                          <h4 className="font-medium text-sm sm:text-base">Enter Marks (Out of 100)</h4>
+                          <div className="space-y-3">
+                            {studentClass.subjects.map((subject) => (
+                              <div key={subject} className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                                <Label className="min-w-0 sm:min-w-[120px] text-sm font-medium">{subject}</Label>
+                                <Input
+                                  type="number"
+                                  min="0"
+                                  max="100"
+                                  value={gradeForm[subject] || ''}
+                                  onChange={(e) => setGradeForm(prev => ({
+                                    ...prev,
+                                    [subject]: parseInt(e.target.value) || 0
+                                  }))}
+                                  placeholder="0-100"
+                                  className="input-field flex-1 text-sm"
+                                />
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       ) : null;
                     })()}
 
                     {selectedStudent && (
-                      <Button type="submit" className="w-full btn-primary">
+                      <Button type="submit" className="w-full btn-primary mt-6">
                         Save Report Card
                       </Button>
                     )}
@@ -601,18 +613,18 @@ const TeacherDashboard = () => {
               </Card>
 
               <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center space-x-2 text-lg">
                     <BookOpen className="w-5 h-5" />
                     <span>Student Report Cards</span>
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm">
                     View and print existing report cards
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {students.length === 0 ? (
-                    <p className="text-muted-foreground text-center py-8">
+                    <p className="text-muted-foreground text-center py-6 sm:py-8 text-sm">
                       No students added yet
                     </p>
                   ) : (
@@ -626,12 +638,12 @@ const TeacherDashboard = () => {
                         return (
                           <div 
                             key={student.id} 
-                            className="p-4 bg-muted/30 rounded-lg space-y-3"
+                            className="p-3 sm:p-4 bg-muted/30 rounded-lg space-y-3"
                           >
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <h4 className="font-medium">{student.name}</h4>
-                                <p className="text-sm text-muted-foreground">{student.class}</p>
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
+                              <div className="min-w-0">
+                                <h4 className="font-medium text-sm sm:text-base truncate">{student.name}</h4>
+                                <p className="text-xs sm:text-sm text-muted-foreground">{student.class}</p>
                               </div>
                               {studentGrades.length > 0 && (
                                 <Badge 
@@ -650,16 +662,16 @@ const TeacherDashboard = () => {
                             </div>
                             
                             {studentGrades.length > 0 ? (
-                              <div className="grid grid-cols-2 gap-2 text-sm">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                                 {studentGrades.map((grade) => (
                                   <div key={grade.id} className="flex justify-between">
-                                    <span className="text-muted-foreground">{grade.subject}:</span>
-                                    <span className="font-medium">{grade.marks}/100</span>
+                                    <span className="text-muted-foreground truncate pr-2">{grade.subject}:</span>
+                                    <span className="font-medium flex-shrink-0">{grade.marks}/100</span>
                                   </div>
                                 ))}
                               </div>
                             ) : (
-                              <p className="text-sm text-muted-foreground italic">
+                              <p className="text-xs sm:text-sm text-muted-foreground italic">
                                 No grades recorded yet
                               </p>
                             )}

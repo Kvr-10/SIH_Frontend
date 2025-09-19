@@ -231,30 +231,57 @@ const AdminDashboard = () => {
                   </form>
                 </CardContent>
               </Card>
+                      <Label htmlFor="email">Email Address *</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={teacherForm.email}
+                        onChange={(e) => setTeacherForm(prev => ({ ...prev, email: e.target.value }))}
+                        placeholder="teacher@school.com"
+                        className="input-field"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        value={teacherForm.phone}
+                        onChange={(e) => setTeacherForm(prev => ({ ...prev, phone: e.target.value }))}
+                        placeholder="Enter phone number"
+                        className="input-field"
+                      />
+                    </div>
+                    <Button type="submit" className="w-full btn-primary">
+                      Add Teacher
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
 
               {/* Teachers List */}
               <Card className="dashboard-card">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg">Current Teachers ({teachers.length})</CardTitle>
-                  <CardDescription className="text-sm">
+                <CardHeader>
+                  <CardTitle>Current Teachers ({teachers.length})</CardTitle>
+                  <CardDescription>
                     All registered teachers in the system
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {teachers.length === 0 ? (
-                    <p className="text-muted-foreground text-center py-6 sm:py-8 text-sm">
+                    <p className="text-muted-foreground text-center py-8">
                       No teachers added yet
                     </p>
                   ) : (
-                    <div className="space-y-3 max-h-64 overflow-y-auto">
+                    <div className="space-y-3">
                       {teachers.map((teacher) => (
                         <div 
                           key={teacher.id} 
-                          className="flex items-start justify-between p-3 bg-muted/30 rounded-lg"
+                          className="flex items-center justify-between p-3 bg-muted/30 rounded-lg"
                         >
-                          <div className="min-w-0 flex-1">
-                            <h4 className="font-medium text-sm sm:text-base truncate">{teacher.name}</h4>
-                            <p className="text-xs sm:text-sm text-muted-foreground truncate">{teacher.email}</p>
+                          <div>
+                            <h4 className="font-medium">{teacher.name}</h4>
+                            <p className="text-sm text-muted-foreground">{teacher.email}</p>
                             <Badge variant="outline" className="mt-1 text-xs">
                               ID: {teacher.teacherId}
                             </Badge>
@@ -272,68 +299,65 @@ const AdminDashboard = () => {
             <>
               {/* Add Class Form */}
               <Card className="dashboard-card">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center space-x-2 text-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
                     <BookOpen className="w-5 h-5" />
                     <span>Add New Class</span>
                   </CardTitle>
-                  <CardDescription className="text-sm">
+                  <CardDescription>
                     Create a new class with subjects
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleAddClass} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="className" className="text-sm font-medium">Class Name *</Label>
+                      <Label htmlFor="className">Class Name *</Label>
                       <Input
                         id="className"
                         value={classForm.name}
                         onChange={(e) => setClassForm(prev => ({ ...prev, name: e.target.value }))}
                         placeholder="e.g., Grade 10-A"
-                        className="input-field text-sm"
+                        className="input-field"
                         required
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium">Subjects *</Label>
-                      <div className="space-y-2">
-                        {classForm.subjects.map((subject, index) => (
-                          <div key={index} className="flex items-center space-x-2">
-                            <Input
-                              value={subject}
-                              onChange={(e) => updateSubject(index, e.target.value)}
-                              placeholder={`Subject ${index + 1}`}
-                              className="input-field flex-1 text-sm"
-                              required
-                            />
-                            {classForm.subjects.length > 1 && (
-                              <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
-                                onClick={() => removeSubjectField(index)}
-                                className="flex-shrink-0"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            )}
-                          </div>
-                        ))}
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={addSubjectField}
-                          className="w-full"
-                        >
-                          <Plus className="w-4 h-4 mr-2" />
-                          Add Subject
-                        </Button>
-                      </div>
+                      <Label>Subjects *</Label>
+                      {classForm.subjects.map((subject, index) => (
+                        <div key={index} className="flex items-center space-x-2">
+                          <Input
+                            value={subject}
+                            onChange={(e) => updateSubject(index, e.target.value)}
+                            placeholder={`Subject ${index + 1}`}
+                            className="input-field flex-1"
+                            required
+                          />
+                          {classForm.subjects.length > 1 && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => removeSubjectField(index)}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          )}
+                        </div>
+                      ))}
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={addSubjectField}
+                        className="w-full"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add Subject
+                      </Button>
                     </div>
                     
-                    <Button type="submit" className="w-full btn-primary mt-6">
+                    <Button type="submit" className="w-full btn-primary">
                       Create Class
                     </Button>
                   </form>
@@ -342,28 +366,28 @@ const AdminDashboard = () => {
 
               {/* Classes List */}
               <Card className="dashboard-card">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg">Current Classes ({classes.length})</CardTitle>
-                  <CardDescription className="text-sm">
+                <CardHeader>
+                  <CardTitle>Current Classes ({classes.length})</CardTitle>
+                  <CardDescription>
                     All classes in the system
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {classes.length === 0 ? (
-                    <p className="text-muted-foreground text-center py-6 sm:py-8 text-sm">
-                      No classes added yet
+                    <p className="text-muted-foreground text-center py-8">
+                      No classes created yet
                     </p>
                   ) : (
-                    <div className="space-y-3 max-h-64 overflow-y-auto">
+                    <div className="space-y-4">
                       {classes.map((cls) => (
                         <div 
                           key={cls.id} 
-                          className="p-3 bg-muted/30 rounded-lg"
+                          className="p-4 bg-muted/30 rounded-lg"
                         >
-                          <h4 className="font-medium text-sm sm:text-base mb-2">{cls.name}</h4>
-                          <div className="flex flex-wrap gap-1 sm:gap-2">
+                          <h4 className="font-medium mb-2">{cls.name}</h4>
+                          <div className="flex flex-wrap gap-2">
                             {cls.subjects.map((subject, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
+                              <Badge key={index} variant="secondary">
                                 {subject}
                               </Badge>
                             ))}
