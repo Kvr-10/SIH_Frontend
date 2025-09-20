@@ -1,0 +1,55 @@
+/* Print styles for ID Card */
+@media print {
+  /* Hide everything except the ID card when printing */
+  body > *:not(.print-area) {
+    display: none !important;
+  }
+  
+  .print-area {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* ID Card specific print styles */
+  .id-card-print {
+    width: 85.6mm !important; /* Standard CR80 card width */
+    height: 53.98mm !important; /* Standard CR80 card height */
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    page-break-inside: avoid;
+  }
+  
+  /* Ensure proper text sizing for print */
+  .id-card-print * {
+    font-size: 8pt !important;
+    line-height: 1.2 !important;
+  }
+  
+  .id-card-print h2 {
+    font-size: 10pt !important;
+  }
+  
+  .id-card-print h3 {
+    font-size: 9pt !important;
+  }
+  
+  /* QR Code sizing for print */
+  .id-card-print canvas {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  /* Remove unnecessary elements in print */
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+}

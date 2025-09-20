@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { studentStorage, attendanceStorage, classStorage, gradeStorage, Student, AttendanceRecord, Grade } from '@/lib/storage';
-import { UserCheck, Camera, Users, ClipboardList, LogOut, UserPlus, QrCode, CheckCircle, Mail, MessageCircle, GraduationCap, BookOpen } from 'lucide-react';
+import { UserCheck, Camera, Users, ClipboardList, LogOut, UserPlus, QrCode, CheckCircle, Mail, MessageCircle, GraduationCap, BookOpen, CreditCard, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { IDCardModal } from '@/components/ui/id-card-modal';
 
 const TeacherDashboard = () => {
   const { user, logout } = useAuth();
@@ -33,6 +34,10 @@ const TeacherDashboard = () => {
   // Report card form state
   const [selectedStudent, setSelectedStudent] = useState<string>('');
   const [gradeForm, setGradeForm] = useState<{[subject: string]: number}>({});
+
+  // ID Card modal state
+  const [showIDCardModal, setShowIDCardModal] = useState(false);
+  const [selectedStudentForIDCard, setSelectedStudentForIDCard] = useState<Student | null>(null);
 
   const handleTakeAttendance = () => {
     // For now, we'll simulate QR code scanning
@@ -105,6 +110,10 @@ const TeacherDashboard = () => {
       title: "Student Added",
       description: `${newStudent.name} has been added successfully`,
     });
+
+    // Show ID card modal for the newly added student
+    setSelectedStudentForIDCard(newStudent);
+    setShowIDCardModal(true);
   };
 
   const handleSendEmail = (parentEmail: string, studentName: string) => {
@@ -119,6 +128,11 @@ const TeacherDashboard = () => {
       title: "SMS Sent",
       description: `Attendance notification sent to ${parentPhone} for ${studentName}`,
     });
+  };
+
+  const handleViewIDCard = (student: Student) => {
+    setSelectedStudentForIDCard(student);
+    setShowIDCardModal(true);
   };
 
   const handleSubmitGrades = (e: React.FormEvent) => {
@@ -458,8 +472,19 @@ const TeacherDashboard = () => {
                             <h4 className="font-medium text-sm sm:text-base truncate">{student.name}</h4>
                             <p className="text-xs sm:text-sm text-muted-foreground">{student.class}</p>
                             <Badge variant="outline" className="mt-1 text-xs">
-                              ID: {student.id}
+                              ID: {student.studentId}
                             </Badge>
+                          </div>
+                          <div className="flex flex-col sm:flex-row gap-2 ml-3">
+                            <Button
+                              onClick={() => handleViewIDCard(student)}
+                              size="sm"
+                              variant="outline"
+                              className="flex items-center space-x-1 text-xs"
+                            >
+                              <CreditCard className="w-3 h-3" />
+                              <span className="hidden sm:inline">ID Card</span>
+                            </Button>
                           </div>
                         </div>
                       ))}
@@ -686,6 +711,16 @@ const TeacherDashboard = () => {
           )}
         </div>
       </div>
+
+      {/* ID Card Modal */}
+      <IDCardModal
+        student={selectedStudentForIDCard}
+        isOpen={showIDCardModal}
+        onClose={() => {
+          setShowIDCardModal(false);
+          setSelectedStudentForIDCard(null);
+        }}
+      />
     </div>
   );
 };

@@ -15,6 +15,7 @@ export interface Teacher extends User {
 
 export interface Student {
   id: string;
+  studentId: string;
   name: string;
   class: string;
   parentName: string;
